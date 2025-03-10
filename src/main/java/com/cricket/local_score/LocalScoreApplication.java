@@ -11,5 +11,6 @@ public class LocalScoreApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LocalScoreApplication.class, args);
 	}
+	
 
 }
