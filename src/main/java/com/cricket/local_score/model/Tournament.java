@@ -14,12 +14,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 public class Tournament {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +32,10 @@ public class Tournament {
     private String name;
     private Date startDate;
     private Date endDate;
-    private int totalTeams;
-    private int priceMoney;
-    private int totalSixs;
-    private int totalFours;
+    private Integer totalTeams;
+    private Integer priceMoney;
+    private Integer totalSixs;
+    private Integer totalFours;
 
     @ManyToOne
     @JoinColumn(name = "winner_team_id")
@@ -44,7 +48,7 @@ public class Tournament {
     private Team runnerTeam;
 
     @ManyToOne
-    @JoinColumn(name = "player_of_tournament_id")
+    @JoinColumn(name = "player_of_tournament")
     @JsonIgnore 
     private Player playerOfTournament;
 
@@ -56,17 +60,15 @@ public class Tournament {
     )
     private Set<Team> teams = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-        name = "tournament_player",
-        joinColumns = @JoinColumn(name = "tournament_id"),
-        inverseJoinColumns = @JoinColumn(name = "player_id")
-    )
-    private Set<Player> players = new HashSet<>();
+    private String Status;
     
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
+    
+    @ManyToOne
+    @JoinColumn(name="address_id")
+    private Address address;
 }
 
 

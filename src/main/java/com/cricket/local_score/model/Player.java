@@ -3,8 +3,6 @@ package com.cricket.local_score.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,28 +10,30 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String name;
-    private int runs;
-    private int boundaries;
-    private int ballsFaced;
-    private int ballsBowled;
-    private int wickets;
-    private int matches;
-    private float battingStrikeRate;
-    private float bowlingStrikeRate;
-    private int catches;
-    private int stumping;
+    private Integer runs;
+    private Integer boundaries;
+    private Integer ballsFaced;
+    private Integer ballsBowled;
+    private Integer wickets;
+    private Integer matches;
+    private Float battingStrikeRate;
+    private Float bowlingStrikeRate;
+    private Integer catches;
 
     @ManyToMany
     @JoinTable(
@@ -42,9 +42,5 @@ public class Player {
         inverseJoinColumns = @JoinColumn(name = "team_id")
     )
     private Set<Team> teams = new HashSet<>();
-
-    @ManyToMany(mappedBy = "players")
-    @JsonIgnore
-    private Set<Tournament> tournaments = new HashSet<>();
 }
 

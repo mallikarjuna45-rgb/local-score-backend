@@ -10,25 +10,27 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
-public class Match {
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name;
     private Date matchDate;
-    private int totalOvers;
-    private int targetRuns;
-    private int targetOvers;
-    private boolean superOver;
-
-    private String matchType; // Example: "TEST", "ODI", "T20"
+    private Integer totalOvers;
+    private Integer targetRuns;
+    private Integer targetOvers;
+    private Integer superOver;
     private String tossDecision; // Example: "BAT", "BOWL"
     private String matchStatus; // Example: "SCHEDULED", "ONGOING", "COMPLETED", "ABANDONED"
 
@@ -59,4 +61,8 @@ public class Match {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User owner; // User who created the match (if needed)
+    
+    @ManyToOne
+    @JoinColumn(name="address_id")
+    private Address adress;
 }
