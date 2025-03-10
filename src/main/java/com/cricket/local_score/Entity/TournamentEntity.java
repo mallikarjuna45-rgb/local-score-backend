@@ -1,30 +1,22 @@
-package com.cricket.local_score.model;
-
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+package com.cricket.local_score.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Tournament {
+public class TournamentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -40,17 +32,17 @@ public class Tournament {
     @ManyToOne
     @JoinColumn(name = "winner_team_id")
     @JsonIgnore 
-    private Team winnerTeam;
+    private TeamEntity winnerTeamEntity;
 
     @ManyToOne
     @JsonIgnore 
     @JoinColumn(name = "runner_team_id")
-    private Team runnerTeam;
+    private TeamEntity runnerTeamEntity;
 
     @ManyToOne
     @JoinColumn(name = "player_of_tournament")
     @JsonIgnore 
-    private Player playerOfTournament;
+    private PlayerEntity playerEntityOfTournament;
 
     @ManyToMany
     @JoinTable(
@@ -58,17 +50,17 @@ public class Tournament {
         joinColumns = @JoinColumn(name = "tournament_id"),
         inverseJoinColumns = @JoinColumn(name = "team_id")
     )
-    private Set<Team> teams = new HashSet<>();
+    private Set<TeamEntity> teamEntities = new HashSet<>();
 
     private String Status;
     
     @ManyToOne
     @JoinColumn(name = "owner_id")
-    private User owner;
+    private UserEntity owner;
     
     @ManyToOne
     @JoinColumn(name="address_id")
-    private Address address;
+    private AddressEntity addressEntity;
 }
 
 

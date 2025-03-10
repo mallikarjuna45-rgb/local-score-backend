@@ -1,4 +1,4 @@
-package com.cricket.local_score.model;
+package com.cricket.local_score.Entity;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Player {
+public class PlayerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -41,6 +41,6 @@ public class Player {
         joinColumns = @JoinColumn(name = "player_id"),
         inverseJoinColumns = @JoinColumn(name = "team_id")
     )
-    private Set<Team> teams = new HashSet<>();
+    private Set<TeamEntity> teamEntities = new HashSet<>();
 }
 

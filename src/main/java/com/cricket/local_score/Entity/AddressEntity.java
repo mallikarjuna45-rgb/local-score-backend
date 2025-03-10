@@ -1,4 +1,4 @@
-package com.cricket.local_score.model;
+package com.cricket.local_score.Entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Address {
+public class AddressEntity {
 		@Id
 		@GeneratedValue(strategy =GenerationType.IDENTITY)
 		private Integer id;

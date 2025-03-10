@@ -1,9 +1,10 @@
 package com.cricket.local_score.Entity;
 
+import com.cricket.local_score.Common.Enums.UserStatus;
 import jakarta.persistence.*;
 
 @Entity
-public class User {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,4 +17,7 @@ public class User {
     private String password;
 
     private String fullName;
+
+    @Enumerated(EnumType.STRING)
+    private UserStatus userStatus;
 }

@@ -1,4 +1,4 @@
-package com.cricket.local_score.model;
+package com.cricket.local_score.Entity;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Team {
+public class TeamEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -31,8 +31,9 @@ public class Team {
     private Integer loss;
     private Integer draw;
     private Integer size;
-    @ManyToMany(mappedBy="teams")
+
+    @ManyToMany(mappedBy="teamEntities")
     @JsonIgnore 
-    private Set<Player> players = new HashSet<>();
+    private Set<PlayerEntity> playerEntities = new HashSet<>();
 
 }
