@@ -7,5 +7,5 @@ import java.util.List;
 @Data
 public class createTeamRequest {
     private String teamName;
-    private List<Integer> playerIds;
+    private List<Long> playerIds;
 }

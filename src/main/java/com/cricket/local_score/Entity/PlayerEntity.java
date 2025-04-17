@@ -16,7 +16,7 @@ import lombok.Setter;
 @Entity
 public class PlayerEntity {
     @Id
-    private Integer id;
+    private Long id;
     private String name;
     private Integer runs;
     private Integer boundaries;

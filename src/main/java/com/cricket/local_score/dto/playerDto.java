@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 @Data
 public class playerDto {
-    private Integer id;
+    private Long id;
     private String name;
     private Integer runs;
     private Integer boundaries;

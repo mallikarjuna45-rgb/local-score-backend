@@ -29,7 +29,7 @@ public class playerService implements IplayerService{
         }
 
         @Override
-        public PlayerEntity updateRuns(Integer playerId, Integer runs) {
+        public PlayerEntity updateRuns(Long playerId, Integer runs) {
             PlayerEntity player = getPlayerById(playerId);
             player.setRuns(player.getRuns()+runs);
             updateBattingStrikeRate(player);
@@ -37,7 +37,7 @@ public class playerService implements IplayerService{
         }
 
         @Override
-        public PlayerEntity updateBoundaries(Integer playerId, Integer boundaries) {
+        public PlayerEntity updateBoundaries(Long playerId, Integer boundaries) {
             PlayerEntity player = getPlayerById(playerId);
             player.setBoundaries(player.getBoundaries()+boundaries);
             player.setRuns(player.getRuns() + (boundaries * 4)); // assuming each boundary is 4
@@ -46,7 +46,7 @@ public class playerService implements IplayerService{
         }
 
         @Override
-        public PlayerEntity updateBallsFaced(Integer playerId, Integer ballsFaced) {
+        public PlayerEntity updateBallsFaced(Long playerId, Integer ballsFaced) {
             PlayerEntity player = getPlayerById(playerId);
             player.setBallsFaced(player.getBallsFaced()+ballsFaced);
             updateBattingStrikeRate(player);
@@ -54,7 +54,7 @@ public class playerService implements IplayerService{
         }
 
         @Override
-        public PlayerEntity updateBallsBowled(Integer playerId, Integer ballsBowled) {
+        public PlayerEntity updateBallsBowled(Long playerId, Integer ballsBowled) {
             PlayerEntity player = getPlayerById(playerId);
             player.setBallsBowled(player.getBallsBowled()+ballsBowled);
             updateBowlingStrikeRate(player);
@@ -62,7 +62,7 @@ public class playerService implements IplayerService{
         }
 
         @Override
-        public PlayerEntity updateWickets(Integer playerId, Integer wickets) {
+        public PlayerEntity updateWickets(Long playerId, Integer wickets) {
             PlayerEntity player = getPlayerById(playerId);
             player.setWickets(wickets);
             updateBowlingStrikeRate(player);
@@ -70,21 +70,21 @@ public class playerService implements IplayerService{
         }
 
         @Override
-        public PlayerEntity updateMatches(Integer playerId, Integer matches) {
+        public PlayerEntity updateMatches(Long playerId, Integer matches) {
             PlayerEntity player = getPlayerById(playerId);
             player.setMatches(matches);
             return playerRepository.save(player);
         }
 
         @Override
-        public PlayerEntity updateCatches(Integer playerId, Integer catches) {
+        public PlayerEntity updateCatches(Long playerId, Integer catches) {
             PlayerEntity player = getPlayerById(playerId);
             player.setCatches(catches);
             return playerRepository.save(player);
         }
 
         @Override
-        public PlayerEntity updateAllAttributes(Integer playerId, PlayerEntity updatedPlayer) {
+        public PlayerEntity updateAllAttributes(Long playerId, PlayerEntity updatedPlayer) {
             PlayerEntity player = getPlayerById(playerId);
 
             player.setName(updatedPlayer.getName());
@@ -103,7 +103,7 @@ public class playerService implements IplayerService{
         }
 
         @Override
-        public PlayerEntity getPlayerById(Integer playerId) {
+        public PlayerEntity getPlayerById(Long playerId) {
             return playerRepository.findById(playerId)
                     .orElseThrow(() -> new RuntimeException("Player not found"));
         }
@@ -137,7 +137,7 @@ public class playerService implements IplayerService{
             }
         }
     @Override
-    public Set<TeamEntity> getTeamsByPlayerId(Integer playerId) {
+    public Set<TeamEntity> getTeamsByPlayerId(Long playerId) {
         PlayerEntity player = playerRepository.findById(playerId)
                 .orElseThrow(() -> new RuntimeException("Player not found"));
         return player.getTeamEntities();

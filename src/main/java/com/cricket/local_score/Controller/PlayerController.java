@@ -61,7 +61,7 @@ public class PlayerController {
     }
 
     @GetMapping("/{playerId}/teams")
-    public ResponseEntity<ApiResponse> getTeamsByPlayerId(@PathVariable Integer playerId) {
+    public ResponseEntity<ApiResponse> getTeamsByPlayerId(@PathVariable Long playerId) {
         try {
             Set<TeamEntity> teams = playerService.getTeamsByPlayerId(playerId);
             return ResponseEntity.ok(new ApiResponse("Teams retrieved", teams));
@@ -71,7 +71,7 @@ public class PlayerController {
     }
 
     @PutMapping("/{playerId}/runs")
-    public ResponseEntity<ApiResponse> updateRuns(@PathVariable Integer playerId, @RequestParam Integer runs) {
+    public ResponseEntity<ApiResponse> updateRuns(@PathVariable Long playerId, @RequestParam Integer runs) {
         try {
             PlayerEntity updated = playerService.updateRuns(playerId, runs);
             return ResponseEntity.ok(new ApiResponse("Runs updated", updated));
@@ -81,7 +81,7 @@ public class PlayerController {
     }
 
     @PutMapping("/{playerId}/boundaries")
-    public ResponseEntity<ApiResponse> updateBoundaries(@PathVariable Integer playerId, @RequestParam Integer boundaries) {
+    public ResponseEntity<ApiResponse> updateBoundaries(@PathVariable Long playerId, @RequestParam Integer boundaries) {
         try {
             PlayerEntity updated = playerService.updateBoundaries(playerId, boundaries);
             return ResponseEntity.ok(new ApiResponse("Boundaries updated", updated));
@@ -91,7 +91,7 @@ public class PlayerController {
     }
 
     @PutMapping("/{playerId}/balls-faced")
-    public ResponseEntity<ApiResponse> updateBallsFaced(@PathVariable Integer playerId, @RequestParam Integer ballsFaced) {
+    public ResponseEntity<ApiResponse> updateBallsFaced(@PathVariable Long playerId, @RequestParam Integer ballsFaced) {
         try {
             PlayerEntity updated = playerService.updateBallsFaced(playerId, ballsFaced);
             return ResponseEntity.ok(new ApiResponse("Balls faced updated", updated));
@@ -101,7 +101,7 @@ public class PlayerController {
     }
 
     @PutMapping("/{playerId}/balls-bowled")
-    public ResponseEntity<ApiResponse> updateBallsBowled(@PathVariable Integer playerId, @RequestParam Integer ballsBowled) {
+    public ResponseEntity<ApiResponse> updateBallsBowled(@PathVariable Long playerId, @RequestParam Integer ballsBowled) {
         try {
             PlayerEntity updated = playerService.updateBallsBowled(playerId, ballsBowled);
             return ResponseEntity.ok(new ApiResponse("Balls bowled updated", updated));
@@ -111,7 +111,7 @@ public class PlayerController {
     }
 
     @PutMapping("/{playerId}/wickets")
-    public ResponseEntity<ApiResponse> updateWickets(@PathVariable Integer playerId, @RequestParam Integer wickets) {
+    public ResponseEntity<ApiResponse> updateWickets(@PathVariable Long playerId, @RequestParam Integer wickets) {
         try {
             PlayerEntity updated = playerService.updateWickets(playerId, wickets);
             return ResponseEntity.ok(new ApiResponse("Wickets updated", updated));
@@ -121,7 +121,7 @@ public class PlayerController {
     }
 
     @PutMapping("/{playerId}/matches")
-    public ResponseEntity<ApiResponse> updateMatches(@PathVariable Integer playerId, @RequestParam Integer matches) {
+    public ResponseEntity<ApiResponse> updateMatches(@PathVariable Long playerId, @RequestParam Integer matches) {
         try {
             PlayerEntity updated = playerService.updateMatches(playerId, matches);
             return ResponseEntity.ok(new ApiResponse("Matches updated", updated));
@@ -131,7 +131,7 @@ public class PlayerController {
     }
 
     @PutMapping("/{playerId}/catches")
-    public ResponseEntity<ApiResponse> updateCatches(@PathVariable Integer playerId, @RequestParam Integer catches) {
+    public ResponseEntity<ApiResponse> updateCatches(@PathVariable Long playerId, @RequestParam Integer catches) {
         try {
             PlayerEntity updated = playerService.updateCatches(playerId, catches);
             return ResponseEntity.ok(new ApiResponse("Catches updated", updated));
@@ -141,7 +141,7 @@ public class PlayerController {
     }
 
     @PutMapping("/{playerId}/update")
-    public ResponseEntity<ApiResponse> updateAllAttributes(@PathVariable Integer playerId, @RequestBody PlayerEntity updatedPlayer) {
+    public ResponseEntity<ApiResponse> updateAllAttributes(@PathVariable Long playerId, @RequestBody PlayerEntity updatedPlayer) {
         try {
             PlayerEntity updated = playerService.updateAllAttributes(playerId, updatedPlayer);
             return ResponseEntity.ok(new ApiResponse("Player updated", updated));
@@ -166,7 +166,7 @@ public class PlayerController {
         return dto;
     }
     @GetMapping("/players/{playerId}")
-    public ResponseEntity<ApiResponse> getPlayerById(@PathVariable Integer playerId) {
+    public ResponseEntity<ApiResponse> getPlayerById(@PathVariable Long playerId) {
         try {
             PlayerEntity player = playerService.getPlayerById(playerId);
             playerDto dto = convertToDto(player);

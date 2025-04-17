@@ -11,20 +11,20 @@ public interface IplayerService {
     PlayerEntity createPlayer(PlayerEntity player, Integer userId);
 
     // Update specific attributes with automatic dependencies
-    PlayerEntity updateRuns(Integer playerId, Integer runs); // also updates strike rate
-    PlayerEntity updateBoundaries(Integer playerId, Integer boundaries); // also updates runs
-    PlayerEntity updateBallsFaced(Integer playerId, Integer ballsFaced); // may update strike rate
-    PlayerEntity updateBallsBowled(Integer playerId, Integer ballsBowled); // may update bowling strike rate
-    PlayerEntity updateWickets(Integer playerId, Integer wickets); // update bowling SR too
-    PlayerEntity updateMatches(Integer playerId, Integer matches);
-    PlayerEntity updateCatches(Integer playerId, Integer catches);
+    PlayerEntity updateRuns(Long playerId, Integer runs); // also updates strike rate
+    PlayerEntity updateBoundaries(Long playerId, Integer boundaries); // also updates runs
+    PlayerEntity updateBallsFaced(Long playerId, Integer ballsFaced); // may update strike rate
+    PlayerEntity updateBallsBowled(Long playerId, Integer ballsBowled); // may update bowling strike rate
+    PlayerEntity updateWickets(Long playerId, Integer wickets); // update bowling SR too
+    PlayerEntity updateMatches(Long playerId, Integer matches);
+    PlayerEntity updateCatches(Long playerId, Integer catches);
 
     // Update all fields (for complete modification)
-    PlayerEntity updateAllAttributes(Integer playerId, PlayerEntity updatedPlayer);
-    Set<TeamEntity> getTeamsByPlayerId(Integer playerId);
+    PlayerEntity updateAllAttributes(Long playerId, PlayerEntity updatedPlayer);
+    Set<TeamEntity> getTeamsByPlayerId(Long playerId);
 
     // Get details
-    PlayerEntity getPlayerById(Integer playerId);
+    PlayerEntity getPlayerById(Long playerId);
     List<PlayerEntity> getAllPlayers();
     List<PlayerEntity> getPlayersByPlayerName(String name);
 }
