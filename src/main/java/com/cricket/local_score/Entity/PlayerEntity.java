@@ -3,13 +3,7 @@ package com.cricket.local_score.Entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +16,6 @@ import lombok.Setter;
 @Entity
 public class PlayerEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private Integer runs;
@@ -34,7 +27,9 @@ public class PlayerEntity {
     private Float battingStrikeRate;
     private Float bowlingStrikeRate;
     private Integer catches;
-
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "userId")
+    private UserEntity user;
     @ManyToMany
     @JoinTable(
         name = "player_team",
