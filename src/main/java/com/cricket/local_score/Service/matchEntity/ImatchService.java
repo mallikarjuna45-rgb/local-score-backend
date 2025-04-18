@@ -49,7 +49,10 @@ public interface ImatchService {
     // ✅ Set target overs and target runs together
     matchDto setTargetDetails(Integer matchId, Integer targetRuns, Integer targetOvers);
     List<teamDto> getTeamsByMatchId(Integer matchId);
-
+    void setTeam1Score(Integer matchId, Integer score);
+    void setTeam2Score(Integer matchId, Integer score);
     // ✅ Set toss winner, match status (ongoing), and toss decision
     matchDto setTossWinnerAndStatus(Integer matchId, Integer tossWinnerTeamId, String tossDecision); // tossDecision = "BAT" / "BOWL"
+
+    List<matchDto> findMatchesByUserId(Integer userId);
 }

@@ -16,6 +16,7 @@ import lombok.Setter;
 @Entity
 public class PlayerEntity {
     @Id
+    @GeneratedValue(strategy =GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private Integer runs;
