@@ -1,11 +1,10 @@
 package com.cricket.local_score.Entity;
 
-import com.cricket.local_score.Common.Enums.Role;
 import com.cricket.local_score.Common.Enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
-//@Getter
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -28,9 +27,6 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
     public Integer getUserId() {
         return userId;
     }
@@ -51,7 +47,4 @@ public class UserEntity {
         return userStatus;
     }
 
-    public Role getRole() {
-        return role;
-    }
 }

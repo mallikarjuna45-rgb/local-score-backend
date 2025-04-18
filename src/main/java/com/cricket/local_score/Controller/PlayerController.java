@@ -18,7 +18,7 @@ import java.util.Set;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
-@RequestMapping("/api/players")
+@RequestMapping("/players")
 public class PlayerController {
     @Autowired
     private IplayerService playerService;
