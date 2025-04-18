@@ -27,10 +27,19 @@ public class AuthController {
     @Autowired private AuthenticationManager authManager;
     @Autowired private JwtUtil jwtUtil;
 
+    @Autowired private OtpController otpController;
+
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@Valid @RequestBody SignUpRequest signUpRequest) {
+
         if (userRepo.findByEmail(signUpRequest.getEmail()).isPresent()) {
             return ResponseEntity.badRequest().body("Username already taken");
+        }
+
+        ResponseEntity<String> responseEntity=otpController.verifyOtp(signUpRequest.getEmail(), String.valueOf(8933));
+
+        if(!responseEntity.getStatusCode().is2xxSuccessful()){
+            return responseEntity;
         }
 
         UserEntity user=UserEntity.builder()

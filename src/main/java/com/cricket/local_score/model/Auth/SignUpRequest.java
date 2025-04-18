@@ -23,4 +23,8 @@ public class SignUpRequest {
 
     @NotBlank(message = "Name cannot be empty")
     private String fullName;
+
+    @NotBlank(message = "Otp cannot be empty")
+    @Size(min=6,max = 6,message = "Otp must be 6 characters")
+    private String otp;
 }
