@@ -1,5 +1,6 @@
 package com.cricket.local_score.Controller;
 
+import com.cricket.local_score.Entity.MatchEntity;
 import com.cricket.local_score.dto.matchDto;
 import com.cricket.local_score.dto.teamDto;
 import com.cricket.local_score.request.createMatchRequest;
@@ -75,6 +76,7 @@ public class MatchController {
                     .body(new ApiResponse("Error while fetching matches by name: " + e.getMessage(), null));
         }
     }
+
 
     @GetMapping("/location/{location}")
     public ResponseEntity<ApiResponse> findMatchesByLocation(@PathVariable String location) {
@@ -163,17 +165,56 @@ public class MatchController {
                     .body(new ApiResponse("Error while fetching upcoming matches: " + e.getMessage(), null));
         }
     }
+//        @PutMapping("/{matchId}/team1-score")
+//    public ResponseEntity<String> setTeam1Score(@PathVariable Integer matchId, @RequestParam Integer score) {
+//        try {
+//            matchService.setTeam1Score(matchId, score);
+//            return ResponseEntity.ok("Team 1 score updated and winner determined.");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body("Error setting Team 1 score: " + e.getMessage());
+//        }
+//    }
 
-    @PutMapping("/{matchId}/target")
-    public ResponseEntity<ApiResponse> setTargetDetails(@PathVariable Integer matchId, @RequestParam Integer targetRuns, @RequestParam Integer targetOvers) {
-        try {
-            matchDto updatedMatch = matchService.setTargetDetails(matchId, targetRuns, targetOvers);
-            return new ResponseEntity<>(new ApiResponse("Target details updated", updatedMatch), HttpStatus.OK);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse("Error while setting target details: " + e.getMessage(), null));
-        }
-    }
+    // Set Team2 Score
+//    @PutMapping("/{matchId}/team2-score")
+//    public ResponseEntity<String> setTeam2Score(@PathVariable Integer matchId, @RequestParam Integer score) {
+//        try {
+//            matchService.setTeam2Score(matchId, score);
+//            return ResponseEntity.ok("Team 2 score updated and winner determined.");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body("Error setting Team 2 score: " + e.getMessage());
+//        }
+//    }
+
+    // Get the Winner of the Match
+//    @GetMapping("/{matchId}/winner")
+//    public ResponseEntity<String> getMatchWinner(@PathVariable Integer matchId) {
+//        try {
+//            MatchEntity match = matchService.getMatchById(matchId);
+//            if (match.getMatchWinner() != null) {
+//                return ResponseEntity.ok("Match Winner: " + match.getMatchWinner().getName());
+//            } else {
+//                return ResponseEntity.ok("The match is a draw or still ongoing.");
+//            }
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body("Error fetching match winner: " + e.getMessage());
+//        }
+//    }
+ //   }
+
+//    @PutMapping("/{matchId}/target")
+//    public ResponseEntity<ApiResponse> setTargetDetails(@PathVariable Integer matchId, @RequestParam Integer targetRuns, @RequestParam Integer targetOvers) {
+//        try {
+//            matchDto updatedMatch = matchService.setTargetDetails(matchId, targetRuns, targetOvers);
+//            return new ResponseEntity<>(new ApiResponse("Target details updated", updatedMatch), HttpStatus.OK);
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(new ApiResponse("Error while setting target details: " + e.getMessage(), null));
+//        }
+//    }
 
     @PutMapping("/{matchId}/toss")
     public ResponseEntity<ApiResponse> setTossWinnerAndStatus(@PathVariable Integer matchId, @RequestParam Integer tossWinnerTeamId, @RequestParam String tossDecision) {
@@ -195,6 +236,57 @@ public class MatchController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ArrayList<>());
         }
     }
+    @PutMapping("/{matchId}/team1-score")
+    public ResponseEntity<String> setTeam1Score(@PathVariable Integer matchId, @RequestParam Integer score) {
+        try {
+            matchService.setTeam1Score(matchId, score);
+            return ResponseEntity.ok("Team 1 score updated and winner determined.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error setting Team 1 score: " + e.getMessage());
+        }
+    }
 
+    // Set Team2 Score
+    @PutMapping("/{matchId}/team2-score")
+    public ResponseEntity<String> setTeam2Score(@PathVariable Integer matchId, @RequestParam Integer score) {
+        try {
+            matchService.setTeam2Score(matchId, score);
+            return ResponseEntity.ok("Team 2 score updated and winner determined.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error setting Team 2 score: " + e.getMessage());
+        }
+    }
+
+    // Get the Winner of the Match
+    @GetMapping("/{matchId}/winner")
+    public ResponseEntity<String> getMatchWinner(@PathVariable Integer matchId) {
+        try {
+            matchDto match = matchService.getMatchById(matchId);
+            if (match.getMatchWinnerName()!= null) {
+                return ResponseEntity.ok("Match Winner: " + match.getMatchWinnerName());
+            } else {
+                return ResponseEntity.ok("The match is a draw or still ongoing.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error fetching match winner: " + e.getMessage());
+        }
+    }
+
+
+
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<ApiResponse> findMatchesByName(@PathVariable Integer userId) {
+        try {
+            List<matchDto> matches = matchService.findMatchesByUserId(userId);
+            return new ResponseEntity<>(new ApiResponse("Matches by user fetched", matches), HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse("Error while fetching matches by user: " + e.getMessage(), null));
+        }
+    }
 
 }

@@ -26,9 +26,9 @@ public class MatchEntity {
     private String name;
     private Date matchDate;
     private Integer totalOvers;
-    private Integer targetRuns;
-    private Integer targetOvers;
-    private Integer superOver;
+//    private Integer targetRuns;
+//    private Integer targetOvers;
+//    private Integer superOver;
 
     @Enumerated(EnumType.STRING)
     private TossDecision tossDecision; // Example: "BAT", "BOWL"
@@ -40,9 +40,9 @@ public class MatchEntity {
     @JoinColumn(name = "tournament_id")
     private TournamentEntity tournamentEntity; // Match may or may not belong to a tournament
 
-    @ManyToOne
-    @JoinColumn(name = "player_of_match")
-    private PlayerEntity playerEntityOfMatch; // ✅ Player of the match added
+    //@ManyToOne
+    //@JoinColumn(name = "player_of_match")
+   // private PlayerEntity playerEntityOfMatch; // ✅ Player of the match added
 
     @ManyToOne
     @JoinColumn(name = "toss_winner")
