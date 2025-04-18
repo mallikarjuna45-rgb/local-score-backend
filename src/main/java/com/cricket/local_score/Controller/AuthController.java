@@ -36,7 +36,7 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Username already taken");
         }
 
-        ResponseEntity<String> responseEntity=otpController.verifyOtp(signUpRequest.getEmail(), String.valueOf(8933));
+        ResponseEntity<String> responseEntity=otpController.verifyOtp(signUpRequest.getEmail(), signUpRequest.getOtp());
 
         if(!responseEntity.getStatusCode().is2xxSuccessful()){
             return responseEntity;
