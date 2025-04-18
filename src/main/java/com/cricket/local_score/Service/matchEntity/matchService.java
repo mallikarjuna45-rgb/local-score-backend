@@ -53,9 +53,9 @@ public class matchService implements ImatchService {
         match.setName(request.getName());
         match.setMatchDate(request.getMatchDate());
         match.setTotalOvers(request.getTotalOvers());
-        match.setTargetRuns(request.getTargetRuns());
-        match.setTargetOvers(request.getTargetOvers());
-        match.setSuperOver(request.getSuperOver());
+//        match.setTargetRuns(request.getTargetRuns());
+//        match.setTargetOvers(request.getTargetOvers());
+//        match.setSuperOver(request.getSuperOver());
         match.setTossDecision(request.getTossDecision());
         match.setMatchStatus(request.getMatchStatus());
 
@@ -64,33 +64,33 @@ public class matchService implements ImatchService {
             match.setTournamentEntity(tournamentRepository.findById(request.getTournamentId()).orElse(null));
         }
 
-        if (request.getPlayerOfMatchId() != null) {
-            match.setPlayerEntityOfMatch(playerRepository.findById(request.getPlayerOfMatchId()).orElse(null));
-        }
+//        if (request.getPlayerOfMatchId() != null) {
+//            match.setPlayerEntityOfMatch(playerRepository.findById(request.getPlayerOfMatchId()).orElse(null));
+//        }
 
-        if (request.getTossWinnerId() != null) {
-            match.setTossWinner(teamRepository.findById(request.getTossWinnerId()).orElse(null));
-        }
+//        if (request.getTossWinnerId() != null) {
+//            match.setTossWinner(teamRepository.findById(request.getTossWinnerId()).orElse(null));
+//        }
 
-        if (request.getMatchWinnerId() != null) {
-            match.setMatchWinner(teamRepository.findById(request.getMatchWinnerId()).orElse(null));
-        }
+//        if (request.getMatchWinnerId() != null) {
+//            match.setMatchWinner(teamRepository.findById(request.getMatchWinnerId()).orElse(null));
+//        }
 
-       // if (request.getTeam1Id() != null) {
+        if (request.getTeam1Id() != null) {
             match.setTeamEntity1(teamRepository.findById(request.getTeam1Id()).orElse(null));
-        //}
+        }
 
-        //if (request.getTeam2Id() != null) {
+        if (request.getTeam2Id() != null) {
             match.setTeamEntity2(teamRepository.findById(request.getTeam2Id()).orElse(null));
-        //}
+        }
 
-       // if (request.getOwnerId() != null) {
+       if (request.getOwnerId() != null) {
             match.setOwner(userRepository.findById(request.getOwnerId()).orElse(null));
-       // }
+       }
 
-       // if (request.getAddressId() != null) {
+       if (request.getAddressId() != null) {
             match.setAddressEntity(addressRepository.findById(request.getAddressId()).orElse(null));
-        //}
+       }
 
         MatchEntity saved = matchRepository.save(match);
         return convertToDto(saved);
@@ -110,7 +110,7 @@ public class matchService implements ImatchService {
         existing.setName(updatedDetails.getName());
         existing.setMatchDate(updatedDetails.getMatchDate());
         existing.setTotalOvers(updatedDetails.getTotalOvers());
-        existing.setSuperOver(updatedDetails.getSuperOver());
+       // existing.setSuperOver(updatedDetails.getSuperOver());
 
         return convertToDto(matchRepository.save(existing));
     }
@@ -177,8 +177,8 @@ public class matchService implements ImatchService {
     @Override
     public matchDto setTargetDetails(Integer matchId, Integer targetRuns, Integer targetOvers) {
         MatchEntity match = matchRepository.findById(matchId).orElseThrow(() -> new EntityNotFoundException("Match not found"));
-        match.setTargetRuns(targetRuns);
-        match.setTargetOvers(targetOvers);
+       // match.setTargetRuns(targetRuns);
+       // match.setTargetOvers(targetOvers);
         return convertToDto(matchRepository.save(match));
     }
 
@@ -194,6 +194,13 @@ public class matchService implements ImatchService {
 
         return convertToDto(matchRepository.save(match));
     }
+
+    @Override
+    public List<matchDto> findMatchesByUserId(Integer userId) {
+        return matchRepository.findByOwner_UserId(userId)
+                .stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
     @Override
     public List<teamDto> getTeamsByMatchId(Integer matchId) {
         MatchEntity match = matchRepository.findById(matchId)
@@ -219,5 +226,36 @@ public class matchService implements ImatchService {
         // Set other fields if needed
         return dto;
     }
+    @Override
+    public void setTeam1Score(Integer matchId, Integer score) {
+        MatchEntity match = matchRepository.findById(matchId).orElseThrow();
+        match.setTeam1Score(score);
+        checkAndSetWinner(match);
+        matchRepository.save(match);
+    }
 
+    @Override
+    public void setTeam2Score(Integer matchId, Integer score) {
+        MatchEntity match = matchRepository.findById(matchId).orElseThrow();
+        match.setTeam2Score(score);
+        checkAndSetWinner(match);
+        matchRepository.save(match);
+    }
+
+    private void checkAndSetWinner(MatchEntity match) {
+        Integer team1Score = match.getTeam1Score();
+        Integer team2Score = match.getTeam2Score();
+
+        if (team1Score != null && team2Score != null) {
+            if (team1Score > team2Score) {
+                TeamEntity team1 = match.getTeamEntity1();  // Get the TeamEntity for team1
+                match.setMatchWinner(team1);  // Set team1 as the winner
+            } else if (team2Score > team1Score) {
+                TeamEntity team2 = match.getTeamEntity2();  // Get the TeamEntity for team2
+                match.setMatchWinner(team2);  // Set team2 as the winner
+            } else {
+                match.setMatchWinner(null); // In case of a draw, no winner
+            }
+        }
+}
 }

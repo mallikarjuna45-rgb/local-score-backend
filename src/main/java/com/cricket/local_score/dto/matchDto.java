@@ -12,16 +12,16 @@ public class matchDto {
     private String name;
     private Date matchDate;
     private Integer totalOvers;
-    private Integer targetRuns;
-    private Integer targetOvers;
+//    private Integer targetRuns;
+//    private Integer targetOvers;
     private TossDecision tossDecision;
     private MatchStatus matchStatus;
 
     private Integer tournamentId;
     private String tournamentName;
 
-    private Integer playerOfMatchId;
-    private String playerOfMatchName;
+//    private Integer playerOfMatchId;
+//    private String playerOfMatchName;
 
     private Integer tossWinnerId;
     private String tossWinnerName;
