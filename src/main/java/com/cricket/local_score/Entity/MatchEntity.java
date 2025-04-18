@@ -21,7 +21,8 @@ public class MatchEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    private Integer team1Score;
+    private Integer team2Score;
     private String name;
     private Date matchDate;
     private Integer totalOvers;
