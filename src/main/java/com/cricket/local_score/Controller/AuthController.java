@@ -18,6 +18,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -91,11 +93,18 @@ public class AuthController {
         Optional<UserEntity> userOptional = userRepo.findByEmail(email);
 
         if (userOptional.isPresent()) {
-            return ResponseEntity.ok(userOptional.get().getUserId());
+            UserEntity user = userOptional.get();
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("userId", user.getUserId());
+            response.put("fullName", user.getFullName()); // or build with user.getFirstName() + " " + user.getLastName()
+
+            return ResponseEntity.ok(response);
         } else {
             return new ResponseEntity<>("User not found with email: " + email, HttpStatus.NOT_FOUND);
         }
     }
+
 
 
 }

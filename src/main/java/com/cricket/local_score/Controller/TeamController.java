@@ -22,6 +22,7 @@ public class TeamController {
     // ✅ Create a team
     @PostMapping("/create")
     public ResponseEntity<ApiResponse> createTeam(@RequestBody createTeamRequest request) {
+        System.out.println("Received team creation request: " + request);
         try {
             teamDto createdTeam = teamService.createTeam(request);
             return ResponseEntity.ok(new ApiResponse("Team created successfully", createdTeam));

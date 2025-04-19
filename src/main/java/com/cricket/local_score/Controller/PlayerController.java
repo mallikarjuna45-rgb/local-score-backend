@@ -34,21 +34,6 @@ public class PlayerController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<ApiResponse> getAllPlayers() {
-        try {
-            List<PlayerEntity> players = playerService.getAllPlayers();
-            List<playerDto> playersDto = new ArrayList<>();
-            for (PlayerEntity player : players) {
-                playersDto.add(convertToDto(player));
-            }
-            return ResponseEntity.ok(new ApiResponse("All players fetched", playersDto));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse("Error while fetching players: " + e.getMessage(), null));
-        }
-    }
-
 
     @GetMapping("/search")
     public ResponseEntity<ApiResponse> getPlayersByName(@RequestParam String name) {
