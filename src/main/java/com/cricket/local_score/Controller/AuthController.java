@@ -18,6 +18,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -82,5 +84,18 @@ public class AuthController {
 
         return new ResponseEntity<>(errorMessage.toString(), HttpStatus.BAD_REQUEST);
     }
+
+
+    @GetMapping("/get-id-by-email")
+    public ResponseEntity<?> getUserIdByEmail(@RequestParam String email) {
+        Optional<UserEntity> userOptional = userRepo.findByEmail(email);
+
+        if (userOptional.isPresent()) {
+            return ResponseEntity.ok(userOptional.get().getUserId());
+        } else {
+            return new ResponseEntity<>("User not found with email: " + email, HttpStatus.NOT_FOUND);
+        }
+    }
+
 
 }
