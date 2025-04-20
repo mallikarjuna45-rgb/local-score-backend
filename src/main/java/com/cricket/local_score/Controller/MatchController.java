@@ -44,16 +44,7 @@ public class MatchController {
         }
     }
 
-    @PutMapping("/{matchId}")
-    public ResponseEntity<ApiResponse> updateMatch(@PathVariable Integer matchId, @RequestBody createMatchRequest updatedDetails) {
-        try {
-            matchDto updatedMatch = matchService.updateMatch(matchId, updatedDetails);
-            return new ResponseEntity<>(new ApiResponse("Match updated successfully", updatedMatch), HttpStatus.OK);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse("Error while updating match: " + e.getMessage(), null));
-        }
-    }
+
 
     @GetMapping("/{matchId}")
     public ResponseEntity<ApiResponse> getMatchById(@PathVariable Integer matchId) {

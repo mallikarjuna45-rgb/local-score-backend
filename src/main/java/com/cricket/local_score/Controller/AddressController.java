@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/address")
+@RequestMapping("api/address")
 public class AddressController {
 
     @Autowired

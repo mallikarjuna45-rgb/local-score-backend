@@ -2,7 +2,9 @@ package com.cricket.local_score.Controller;
 
 import com.cricket.local_score.Entity.PlayerEntity;
 import com.cricket.local_score.Service.playerEntity.IplayerService;
+import com.cricket.local_score.Service.teamEntity.IteamService;
 import com.cricket.local_score.dto.playerDto;
+import com.cricket.local_score.dto.teamDto;
 import com.cricket.local_score.response.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,9 @@ public class PublicController {
 
     @Autowired
     private IplayerService playerService;
+
+    @Autowired
+    private IteamService teamService;
 
     @GetMapping("/get-all-players")
     public ResponseEntity<ApiResponse> getAllPlayers() {
@@ -50,5 +55,16 @@ public class PublicController {
         dto.setCatches(player.getCatches());
         dto.setTeamEntities(player.getTeamEntities());
         return dto;
+    }
+
+    @GetMapping("get-all-teams")
+    public ResponseEntity<ApiResponse> getAllTeams() {
+        try {
+            List<teamDto> teams = teamService.getAllTeams();
+            return ResponseEntity.ok(new ApiResponse("All teams fetched", teams));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse("Error while fetching teams: " + e.getMessage(), null));
+        }
     }
 }

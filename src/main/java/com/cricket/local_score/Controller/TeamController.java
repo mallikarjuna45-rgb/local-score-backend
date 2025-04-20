@@ -33,16 +33,7 @@ public class TeamController {
     }
 
     // ✅ Get all teams
-    @GetMapping
-    public ResponseEntity<ApiResponse> getAllTeams() {
-        try {
-            List<teamDto> teams = teamService.getAllTeams();
-            return ResponseEntity.ok(new ApiResponse("All teams fetched", teams));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse("Error while fetching teams: " + e.getMessage(), null));
-        }
-    }
+
 
     // ✅ Get a team by ID
     @GetMapping("/{teamId}")
