@@ -37,19 +37,11 @@ public class teamService implements IteamService {
     public teamDto createTeam(createTeamRequest request) {
         List<Integer> playerIds = request.getPlayerIds();
 
-        if (playerIds == null || playerIds.size() != 11) {
-            throw new RuntimeException("Team must contain exactly 11 unique players");
-        }
-
         Set<PlayerEntity> players = new HashSet<>();
         for (Integer id : playerIds) {
             PlayerEntity player = playerRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Player not found with ID: " + id));
             players.add(player);
-        }
-
-        if (players.size() != 11) {
-            throw new RuntimeException("Players must be unique");
         }
 
         TeamEntity team = new TeamEntity();
