@@ -22,13 +22,14 @@ public class MatchEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer team1Score;
+    private Integer team1wickets;
+    private float team1Overs;
     private Integer team2Score;
+    private Integer team2wickets;
+    private float team2Overs;
     private String name;
     private Date matchDate;
     private Integer totalOvers;
-//    private Integer targetRuns;
-//    private Integer targetOvers;
-//    private Integer superOver;
 
     @Enumerated(EnumType.STRING)
     private TossDecision tossDecision; // Example: "BAT", "BOWL"
@@ -40,13 +41,8 @@ public class MatchEntity {
     @JoinColumn(name = "tournament_id")
     private TournamentEntity tournamentEntity; // Match may or may not belong to a tournament
 
-    //@ManyToOne
-    //@JoinColumn(name = "player_of_match")
-   // private PlayerEntity playerEntityOfMatch; // ✅ Player of the match added
 
-    @ManyToOne
-    @JoinColumn(name = "toss_winner")
-    private TeamEntity tossWinner; // Toss winner team
+    private String tossWinner; // Toss winner team
 
     @ManyToOne
     @JoinColumn(name = "match_winner")

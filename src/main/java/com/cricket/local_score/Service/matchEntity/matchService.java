@@ -9,6 +9,7 @@ import com.cricket.local_score.dto.matchDto;
 import com.cricket.local_score.dto.teamDto;
 import com.cricket.local_score.request.createMatchRequest;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
@@ -104,21 +105,18 @@ public class matchService implements ImatchService {
     }
 
     @Override
-    public matchDto updateMatch(Integer matchId, createMatchRequest updatedDetails) {
+    public MatchEntity updateMatch(Integer matchId, MatchEntity updatedDetails) {
         MatchEntity existing = matchRepository.findById(matchId).orElseThrow(() -> new EntityNotFoundException("Match not found"));
 
-        existing.setName(updatedDetails.getName());
-        existing.setMatchDate(updatedDetails.getMatchDate());
-        existing.setTotalOvers(updatedDetails.getTotalOvers());
-       // existing.setSuperOver(updatedDetails.getSuperOver());
+        BeanUtils.copyProperties(updatedDetails, existing, "id"); // don't overwrite id
 
-        return convertToDto(matchRepository.save(existing));
+        return matchRepository.save(existing);
     }
 
     @Override
-    public matchDto getMatchById(Integer matchId) {
+    public MatchEntity getMatchById(Integer matchId) {
         MatchEntity match = matchRepository.findById(matchId).orElseThrow(() -> new EntityNotFoundException("Match not found"));
-        return convertToDto(match);
+        return match;
     }
 
     @Override
@@ -146,8 +144,8 @@ public class matchService implements ImatchService {
     }
 
     @Override
-    public List<matchDto> findAllMatches() {
-        return matchRepository.findAll().stream().map(this::convertToDto).collect(Collectors.toList());
+    public List<MatchEntity> findAllMatches() {
+        return matchRepository.findAll();
     }
 
     @Override
@@ -182,18 +180,18 @@ public class matchService implements ImatchService {
         return convertToDto(matchRepository.save(match));
     }
 
-    @Override
-    public matchDto setTossWinnerAndStatus(Integer matchId, Integer tossWinnerTeamId, String tossDecisionStr) {
-        MatchEntity match = matchRepository.findById(matchId).orElseThrow(() -> new EntityNotFoundException("Match not found"));
-        TossDecision tossDecision = TossDecision.valueOf(tossDecisionStr.toUpperCase());
-        TeamEntity tossWinner = teamRepository.findById(tossWinnerTeamId).orElseThrow(() -> new EntityNotFoundException("Team not found"));
-
-        match.setTossWinner(tossWinner);
-        match.setTossDecision(tossDecision);
-        match.setMatchStatus(MatchStatus.ONGOING);
-
-        return convertToDto(matchRepository.save(match));
-    }
+//    @Override
+//    public matchDto setTossWinnerAndStatus(Integer matchId, Integer tossWinnerTeamId, String tossDecisionStr) {
+//        MatchEntity match = matchRepository.findById(matchId).orElseThrow(() -> new EntityNotFoundException("Match not found"));
+//        TossDecision tossDecision = TossDecision.valueOf(tossDecisionStr.toUpperCase());
+//        TeamEntity tossWinner = teamRepository.findById(tossWinnerTeamId).orElseThrow(() -> new EntityNotFoundException("Team not found"));
+//
+//        match.setTossWinner(tossWinner);
+//        match.setTossDecision(tossDecision);
+//        match.setMatchStatus(MatchStatus.ONGOING);
+//
+//        return convertToDto(matchRepository.save(match));
+//    }
 
     @Override
     public List<matchDto> findMatchesByUserId(Integer userId) {
