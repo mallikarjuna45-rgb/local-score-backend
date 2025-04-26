@@ -1,5 +1,6 @@
 package com.cricket.local_score.Service.matchEntity;
 
+import com.cricket.local_score.Entity.MatchEntity;
 import com.cricket.local_score.dto.matchDto;
 import com.cricket.local_score.dto.teamDto;
 import com.cricket.local_score.request.createMatchRequest;
@@ -14,10 +15,10 @@ public interface ImatchService {
     void deleteMatch(Integer matchId);
 
     // ✅ Update match details (generic update)
-    matchDto updateMatch(Integer matchId, createMatchRequest updatedDetails);
+    MatchEntity updateMatch(Integer matchId, MatchEntity updatedDetails);
 
     // ✅ Get match by ID
-    matchDto getMatchById(Integer matchId);
+    MatchEntity getMatchById(Integer matchId);
 
     // ✅ Find matches by name
     List<matchDto> findMatchesByName(String name);
@@ -32,7 +33,7 @@ public interface ImatchService {
     List<matchDto> findMatchesByTournamentName(String tournamentName);
 
     // ✅ Find all matches
-    List<matchDto> findAllMatches();
+    List<MatchEntity> findAllMatches();
 
     // ✅ Find all ongoing matches
     List<matchDto> findAllOngoingMatches();
@@ -52,7 +53,7 @@ public interface ImatchService {
     void setTeam1Score(Integer matchId, Integer score);
     void setTeam2Score(Integer matchId, Integer score);
     // ✅ Set toss winner, match status (ongoing), and toss decision
-    matchDto setTossWinnerAndStatus(Integer matchId, Integer tossWinnerTeamId, String tossDecision); // tossDecision = "BAT" / "BOWL"
+//    matchDto setTossWinnerAndStatus(Integer matchId, Integer tossWinnerTeamId, String tossDecision); // tossDecision = "BAT" / "BOWL"
 
     List<matchDto> findMatchesByUserId(Integer userId);
 }

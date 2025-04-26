@@ -1,5 +1,6 @@
 package com.cricket.local_score.Controller;
 
+import com.cricket.local_score.Entity.MatchEntity;
 import com.cricket.local_score.Service.matchEntity.ImatchService;
 import com.cricket.local_score.dto.matchDto;
 import com.cricket.local_score.request.createMatchRequest;
@@ -17,9 +18,9 @@ public class PrivateController {
     private ImatchService matchService;
 
     @PutMapping("/{matchId}")
-    public ResponseEntity<ApiResponse> updateMatch(@PathVariable Integer matchId, @RequestBody createMatchRequest updatedDetails) {
+    public ResponseEntity<ApiResponse> updateMatch(@PathVariable Integer matchId, @RequestBody MatchEntity updatedDetails) {
         try {
-            matchDto updatedMatch = matchService.updateMatch(matchId, updatedDetails);
+            MatchEntity updatedMatch = matchService.updateMatch(matchId, updatedDetails);
             return new ResponseEntity<>(new ApiResponse("Match updated successfully", updatedMatch), HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -49,7 +49,7 @@ public class MatchController {
     @GetMapping("/{matchId}")
     public ResponseEntity<ApiResponse> getMatchById(@PathVariable Integer matchId) {
         try {
-            matchDto match = matchService.getMatchById(matchId);
+            MatchEntity match = matchService.getMatchById(matchId);
             return new ResponseEntity<>(new ApiResponse("Match fetched successfully", match), HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -105,7 +105,7 @@ public class MatchController {
     @GetMapping
     public ResponseEntity<ApiResponse> findAllMatches() {
         try {
-            List<matchDto> matches = matchService.findAllMatches();
+            List<MatchEntity> matches = matchService.findAllMatches();
             return new ResponseEntity<>(new ApiResponse("All matches fetched", matches), HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -207,16 +207,16 @@ public class MatchController {
 //        }
 //    }
 
-    @PutMapping("/{matchId}/toss")
-    public ResponseEntity<ApiResponse> setTossWinnerAndStatus(@PathVariable Integer matchId, @RequestParam Integer tossWinnerTeamId, @RequestParam String tossDecision) {
-        try {
-            matchDto updatedMatch = matchService.setTossWinnerAndStatus(matchId, tossWinnerTeamId, tossDecision);
-            return new ResponseEntity<>(new ApiResponse("Toss winner and status updated", updatedMatch), HttpStatus.OK);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse("Error while setting toss winner and status: " + e.getMessage(), null));
-        }
-    }
+//    @PutMapping("/{matchId}/toss")
+//    public ResponseEntity<ApiResponse> setTossWinnerAndStatus(@PathVariable Integer matchId, @RequestParam Integer tossWinnerTeamId, @RequestParam String tossDecision) {
+//        try {
+//            matchDto updatedMatch = matchService.setTossWinnerAndStatus(matchId, tossWinnerTeamId, tossDecision);
+//            return new ResponseEntity<>(new ApiResponse("Toss winner and status updated", updatedMatch), HttpStatus.OK);
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(new ApiResponse("Error while setting toss winner and status: " + e.getMessage(), null));
+//        }
+//    }
 
     @GetMapping("/matches/{matchId}/teams")
     public ResponseEntity<List<teamDto>> getTeamsByMatchId(@PathVariable Integer matchId) {
@@ -251,20 +251,20 @@ public class MatchController {
     }
 
     // Get the Winner of the Match
-    @GetMapping("/{matchId}/winner")
-    public ResponseEntity<String> getMatchWinner(@PathVariable Integer matchId) {
-        try {
-            matchDto match = matchService.getMatchById(matchId);
-            if (match.getMatchWinnerName()!= null) {
-                return ResponseEntity.ok("Match Winner: " + match.getMatchWinnerName());
-            } else {
-                return ResponseEntity.ok("The match is a draw or still ongoing.");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error fetching match winner: " + e.getMessage());
-        }
-    }
+//    @GetMapping("/{matchId}/winner")
+//    public ResponseEntity<String> getMatchWinner(@PathVariable Integer matchId) {
+//        try {
+//            matchDto match = matchService.getMatchById(matchId);
+//            if (match.getMatchWinnerName()!= null) {
+//                return ResponseEntity.ok("Match Winner: " + match.getMatchWinnerName());
+//            } else {
+//                return ResponseEntity.ok("The match is a draw or still ongoing.");
+//            }
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body("Error fetching match winner: " + e.getMessage());
+//        }
+//    }
 
 
 
